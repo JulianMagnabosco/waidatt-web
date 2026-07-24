@@ -1,0 +1,27 @@
+<div class="bg-gray-300 min-h-screen flex flex-col">
+  <header>
+    <nav class="bg-gray-800 text-white p-4 flex justify-between items-center font-bold">
+      <a routerLink="/">LIQUIDADORA RGW</a>
+      <div class="*:transition-colors *:duration-300 *:hover:bg-cyan-600 *:hover:text-black *:p-4 flex justify-between items-center gap-1">
+        <a routerLink="/list">BUSCAR</a>
+        @if (admin()) {
+          
+        <a routerLink="/add">NUEVO PRODUCTO</a>
+        <a class="bg-cyan-900" routerLink="/logout">CERRAR SESION</a>
+        }@else {
+          
+        <a class="bg-cyan-900" routerLink="/login">INICIAR SESION</a>
+        }
+      </div>
+    </nav>
+  </header>
+
+  <main class="grow">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="bg-gray-800 text-white p-4 text-center">
+    <p>&copy; 2026 Liquidadora RGW</p>
+  </footer>
+
+</div>
