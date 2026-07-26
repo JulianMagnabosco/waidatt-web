@@ -1,31 +1,15 @@
 import { Component, signal } from '@angular/core';
-import { Carousel } from '../carousel/carousel';
 import { TableProducts } from '../table-products/table-products';
 import { Product } from '../../models/product';
-import { environment } from '../../../environments/environment.development';
+import { form, FormField } from '@angular/forms/signals';
 
 @Component({
-  selector: 'app-home',
-  imports: [Carousel, TableProducts],
-  templateUrl: './home.html',
-  styleUrl: './home.css',
+  selector: 'app-catalog',
+  imports: [TableProducts, FormField],
+  templateUrl: './catalog.html',
+  styleUrl: './catalog.css',
 })
-export class Home {
-  whatsappNumber = environment.whatsappNumber;
-  whatsappLink = environment.whatsappLink + "?text=Hola!%20Estoy%20interesado%20en%20sus%20productos.%20Quisiera%20saber%20más%20información.";
-
-  slides = [
-    { id: 1, imageUrl: 'Captura3.png', title: '' },
-    { id: 2, imageUrl: 'Captura2.png', title: '' },
-    { id: 3, imageUrl: 'Captura1.png', title: '' },
-  ];
-
-  sections = [
-    { id: 1, iconUrl: 'icono1.svg', content: 'INDUMENTARIA' },
-    { id: 2, iconUrl: 'icono2.svg', content: 'CALZADO' },
-    { id: 3, iconUrl: 'icono3.svg', content: 'ELEMENTOS DE \n SEGURIDAD' },
-  ];
-
+export class Catalog {
   products = signal<Product[]>([
     { id: 1, name: 'Producto 1', description: 'Descripción del producto 1', price: 10.99, imageUrl: 'not-found.png' },
     { id: 2, name: 'Producto 2', description: 'Descripción del producto 2', price: 19.99, imageUrl: 'not-found.png' },
@@ -36,4 +20,11 @@ export class Home {
     { id: 7, name: 'Producto 7', description: 'Descripción del producto 7', price: 22.00, imageUrl: 'not-found.png' },
     { id: 8, name: 'Producto 8', description: 'Descripción del producto 8', price: 18.25, imageUrl: 'not-found.png' },
   ]);
+
+  searchModel = signal({
+    email: ''
+  });
+
+  searchForm = form(this.searchModel)
+
 }

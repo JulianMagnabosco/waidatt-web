@@ -1,0 +1,10 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+  @for (item of products(); track $index) {
+    <div class="rounded-lg p-4 flex flex-col items-center bg-white shadow-md">
+      <img src="{{ item.imageUrl || 'not-found.png' }}" alt="{{ item.name }}" 
+      class="w-full aspect-square object-cover mb-2">
+      <h3>{{ item.name }}</h3>
+      <p class="text-xl font-bold">${{ item.price.toFixed(2) }}</p>
+    </div>
+  }
+</div>
