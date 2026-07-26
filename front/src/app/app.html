@@ -1,8 +1,11 @@
-<div class="bg-gray-300 min-h-screen flex flex-col">
+<div class=" min-h-screen flex flex-col">
   <header>
-    <nav class="bg-gray-800 text-white p-4 flex justify-between items-center font-bold">
-      <a routerLink="/">LIQUIDADORA RGW</a>
-      <div class="*:transition-colors *:duration-300 *:hover:bg-cyan-600 *:hover:text-black *:p-4 flex justify-between items-center gap-1">
+    <nav class="bg-celeste text-white p-4 flex justify-between items-center font-bold">
+      <a routerLink="/">
+        <img src="logo.jpg" alt="Logo" class="h-12">
+      </a>
+      <div class="flex justify-between items-center gap-1 transition-colors
+      *:rounded *:duration-300 *:hover:bg-cyan-600 *:hover:text-black *:p-4 ">
         <a routerLink="/list">BUSCAR</a>
         @if (admin()) {
           

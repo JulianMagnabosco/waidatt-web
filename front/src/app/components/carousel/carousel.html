@@ -1,0 +1,84 @@
+<div
+  class="relative w-full max-w-3xl mx-auto overflow-hidden rounded-2xl shadow-lg select-none"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  (mousedown)="onDragStart($event)"
+  (mousemove)="onDragMove($event)"
+  (mouseup)="onDragEnd()"
+  (touchstart)="onDragStart($event)"
+  (touchmove)="onDragMove($event)"
+  (touchend)="onDragEnd()"
+>
+  <!-- Slides track -->
+  <div
+    class="flex transition-transform duration-500 ease-out"
+    [style.transform]="'translateX(-' + (activeIndex() * 100) + '%)'"
+  >
+    @for (slide of slides; track slide.id) {
+      <div class="w-full shrink-0 relative">
+        <img
+          [src]="slide.imageUrl"
+          [alt]="slide.alt || slide.title || 'slide'"
+          class="w-full h-64 sm:h-80 md:h-96 object-cover"
+          draggable="false"
+        />
+        @if (slide.title || slide.caption) {
+          <div
+            class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4 text-white"
+          >
+            @if (slide.title) {
+              <h3 class="text-lg font-semibold">{{ slide.title }}</h3>
+            }
+            @if (slide.caption) {
+              <p class="text-sm text-white/80">{{ slide.caption }}</p>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <!-- Prev button -->
+  <button
+    type="button"
+    (click)="prev()"
+    aria-label="Previous slide"
+    class="absolute top-1/2 left-3 -translate-y-1/2 flex items-center justify-center
+           w-9 h-9 rounded-full bg-black/40 text-white hover:bg-black/60
+           transition-colors backdrop-blur-sm"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+    </svg>
+  </button>
+
+  <!-- Next button -->
+  <button
+    type="button"
+    (click)="next()"
+    aria-label="Next slide"
+    class="absolute top-1/2 right-3 -translate-y-1/2 flex items-center justify-center
+           w-9 h-9 rounded-full bg-black/40 text-white hover:bg-black/60
+           transition-colors backdrop-blur-sm"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </button>
+
+  <!-- Dots -->
+  <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+    @for (slide of slides; track slide.id; let i = $index) {
+      <button
+        type="button"
+        (click)="goTo(i)"
+        [attr.aria-label]="'Go to slide ' + (i + 1)"
+        class="w-2.5 h-2.5 rounded-full transition-all"
+        [class.bg-white]="activeIndex() === i"
+        [class.w-6]="activeIndex() === i"
+        [class.bg-white_50]="activeIndex() !== i"
+        [ngClass]="activeIndex() === i ? 'bg-white w-6' : 'bg-white/50 w-2.5'"
+      ></button>
+    }
+  </div>
+</div>
