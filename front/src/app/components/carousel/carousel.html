@@ -1,5 +1,5 @@
 <div
-  class="relative w-full max-w-3xl mx-auto overflow-hidden rounded-2xl shadow-lg select-none"
+  class="relative w-full max-w-6xl mx-auto overflow-hidden rounded-2xl shadow-lg select-none"
   (mouseenter)="onMouseEnter()"
   (mouseleave)="onMouseLeave()"
   (mousedown)="onDragStart($event)"
@@ -19,7 +19,7 @@
         <img
           [src]="slide.imageUrl"
           [alt]="slide.alt || slide.title || 'slide'"
-          class="w-full h-64 sm:h-80 md:h-96 object-cover"
+          class="w-full h-64 sm:h-80 md:h-120 object-cover"
           draggable="false"
         />
         @if (slide.title || slide.caption) {
@@ -67,7 +67,7 @@
   </button>
 
   <!-- Dots -->
-  <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+  <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2 bg-black p-5 rounded-sm">
     @for (slide of slides; track slide.id; let i = $index) {
       <button
         type="button"
