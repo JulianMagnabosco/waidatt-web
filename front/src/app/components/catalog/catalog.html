@@ -15,7 +15,7 @@
      <div class="flex justify-center items-center flex-wrap gap-2 mt-2">
       <span class="text-center max-w-full">
         Tipo:
-      <select class="bg-sky-100 p-2 rounded-md">
+      <select class="bg-sky-100 p-2 rounded-md" [formField]="searchForm.product_type">
         <option value="">Todos</option>
         <option value="indumentaria">Indumentaria</option>
         <option value="calzado">Calzado</option>
@@ -24,10 +24,11 @@
       </span>
       <span class="text-center max-w-full">
         Ordenar por:
-      <select class="bg-sky-100 p-2 rounded-md">
-        <option value="indumentaria">Precio: Menor a Mayor</option>
-        <option value="calzado">Precio: Mayor a Menor</option>
-        <option value="elementos-seguridad">Alfabético A-Z</option>
+      <select class="bg-sky-100 p-2 rounded-md" [formField]="searchForm.ordering">
+        <option value="-name">Alfabético A-Z</option>
+        <option value="name">Alfabético Z-A</option>
+        <option value="price">Precio: Menor a Mayor</option>
+        <option value="-price">Precio: Mayor a Menor</option>
       </select>
       </span>
      </div>

@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { form, FormField, FormRoot, maxLength, required } from '@angular/forms/signals';
 import { UserService } from '../../services/user-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,6 +11,7 @@ import { UserService } from '../../services/user-service';
 })
 export class Login {
   loginService = inject(UserService);
+  router = inject(Router);
 
   loginModel = signal({
     username: '',
@@ -35,6 +37,7 @@ export class Login {
         this.loginService.login(values).subscribe({
           next: (response) => {
             console.log('Login successful:', response);
+            this.router.navigate(['/']); // volver al inicio
             resolve({ ok: true });
           },
           error: (error) => {

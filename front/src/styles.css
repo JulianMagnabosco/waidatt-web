@@ -3,5 +3,5 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-celeste: rgb(82, 187, 244);
+  --color-celeste: #4EC4FF;
 }

@@ -1,0 +1,25 @@
+
+<div class="p-5">
+<a class="bg-cyan-700 hover:bg-cyan-500 p-2 rounded-md font-bold shadow-black text-white uppercase" 
+routerLink="/catalog">&LeftArrow; Volver atras</a>
+</div>
+
+<div class="mt-5 shadow-2xl p-5 bg-sky-50">
+  @if (product()) {
+  <div class="flex justify-center">
+    <img class="rounded-md shadow-2xl" src="{{product()?.imageUrl || 'not-found.png'}}" alt="">
+    <div class="p-5">
+      <h1 class="text-3xl bold uppercase">{{product()?.name}}</h1>
+      <div class="p-1 rounded-2xl bg-sky-300 text-black font-bold uppercase">{{product()?.product_type}}</div>
+      <div class="text-2xl">${{product()?.price}}</div>
+      <div>{{product()?.description}}</div>
+    </div>
+  </div>
+  }
+  @else if (notFound()) {
+  <div class="text-4xl uppercase">No encontrado</div>
+  }
+  @else {
+  <div class="text-4xl uppercase">Cargando...</div>
+  }
+</div>

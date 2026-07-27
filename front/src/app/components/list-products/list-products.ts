@@ -11,8 +11,8 @@ import { RouterLink } from '@angular/router';
 export class ListProducts {
 
   products = signal<Product[]>([
-    new Product(1, 'Producto 1', 'Descripción del producto 1', 10.99),
-    new Product(2, 'Producto 2', 'Descripción del producto 2', 19.99),
+    new Product(1, 'Producto 1', 'Descripción del producto 1',"Indumentaria", 10.99),
+    new Product(2, 'Producto 2', 'Descripción del producto 2',"Indumentaria", 19.99),
   ]);
 
   deleteProduct(arg0: number) {

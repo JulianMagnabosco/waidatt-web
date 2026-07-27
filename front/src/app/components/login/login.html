@@ -2,12 +2,12 @@
     <form class="max-w-md mx-auto" action="" [formRoot]="loginForm">
         <div class="mb-4">
             <label for="username" class="block text-gray-700 font-bold mb-2">Usuario:</label>
-            <input type="text" id="username" [formField]="loginForm.username"
+            <input autocomplete="username" type="text" id="username" [formField]="loginForm.username"
             class="border border-gray-300 rounded px-3 py-2 w-full">
         </div>
         <div class="mb-4">
             <label for="password" class="block text-gray-700 font-bold mb-2">Contraseña:</label>
-            <input type="password" id="password" [formField]="loginForm.password"
+            <input autocomplete="current-password" type="password" id="password" [formField]="loginForm.password"
             class="border border-gray-300 rounded px-3 py-2 w-full">
         </div>
         <div class="mb-4 flex justify-center">

@@ -2,15 +2,15 @@
   <header>
     <nav class="bg-celeste text-white p-4 flex justify-between items-center font-bold">
       <a routerLink="/">
-        <img src="logo.jpg" alt="Logo" class="h-12">
+        <img src="logotipo.png" alt="Logo" class="h-12">
       </a>
       <div class="flex justify-between items-center gap-1 transition-colors text-center
-      *:rounded *:duration-300 *:hover:bg-cyan-600 *:hover:text-black *:p-4 ">
+      *:rounded-xl *:duration-300 *:hover:text-black *:p-4 ">
         <a routerLink="/catalog">CATALOGO</a>
         @if (userLoggedIn()) {
           
         <a routerLink="/add">NUEVO PRODUCTO</a>
-        <a class="bg-cyan-900" (click)="logout()">CERRAR SESION</a>
+        <a class="bg-red-900" (click)="logout()">CERRAR SESION</a>
         }@else {
           
         <a class="bg-cyan-900" routerLink="/login">INICIAR SESION</a>
