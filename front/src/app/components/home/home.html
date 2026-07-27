@@ -1,18 +1,21 @@
 <div class="text-center mt-8">
+  
+  <!-- bienvenida -->
   <h1 class="text-cyan-600 text-4xl font-bold mb-4">Bienvenido a <span class="text-cyan-800 font-extrabold">LIQUIDADORA
       RGW</span></h1>
-
   <p class="text-lg mb-4">Explora nuestros productos y encuentra lo mejor en <span
       class="text-cyan-600 font-bold">indumentaria laboral y de seguridad.</span></p>
 
-  <div class="bg-sky-100 py-1 mt-8">
+  <!-- fotos -->
+  <div class="py-1 mt-8">
     <app-carousel [slides]="slides"></app-carousel>
   </div>
 
+  <!-- tipos de producto -->
   <div class="flex justify-evenly mt-10 mb-10 gap-4 ">
     @for (s of sections; track $index) {
     <div class="flex flex-col items-center justify-start">
-      <div class="p-5 size-40 bg-celeste rounded-full">
+      <div class="p-5 size-40 bg-celeste rounded-full shadow-lg">
         <img class="w-full h-full " src="{{ s.iconUrl }}" alt="{{ s.content }}">
       </div>
       <div class="text-center text-2xl font-bold uppercase whitespace-pre-line">{{ s.content }}</div>
@@ -20,30 +23,32 @@
     }
   </div>
 
+  <!-- minicatalogo -->
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
     <h1 class="text-3xl font-bold text-center mb-4">Nuestros Productos</h1>
 
     <app-table-products [products]="products()"></app-table-products>
   </div>
 
+  <!-- contactos -->
   <div class="mb-10">
-    <div class="bg-celeste text-white py-10 text-center text-3xl">
+    <div class="bg-celeste text-white py-10 text-center text-3xl shadow-lg ">
       <span class="font-bold uppercase text-shadow-sm">¡Contáctanos!</span> <br>
     </div>
-    <div class="bg-sky-100 py-10 text-center text-2xl">
+    <div class=" py-10 text-center text-2xl">
       <p>Si tenés alguna pregunta o necesitas más información, no dudes en contactarnos.</p>
       <p class="mt-4">Estamos aquí para ayudarte a encontrar los productos que necesitas.</p>
     </div>
     <div class="flex items-center justify-center gap-4 flex-wrap
-    *:bg-cyan-600 *:text-white *:p-4 *:text-center *:text-2xl *:rounded-full">
+    *:bg-cyan-600 *:text-white *:p-4 *:text-center *:rounded-full *:shadow-lg ">
       <div>
-        <p>Teléfono: <a href="{{whatsappLink}}" class="text-cyan-300 hover:underline">{{ whatsappNumber }}</a></p>
+        <p>Dirección: <span class="text-cyan-100">Calle 123, Cordoba Capital</span></p>
       </div>
       <div>
-        <p>Dirección: <span class="text-cyan-300">Calle 123, Cordoba Capital</span></p>
+        <p>Whatsapp: <a href="{{whatsappLink}}" class="text-cyan-100 hover:underline">{{ whatsappNumber }}</a></p>
       </div>
-      <div >
-        <p>Email: <a href="mailto:info@mail.com" class="text-cyan-300 hover:underline">info@mail.com</a></p>
+      <div>
+        <p>Email: <a href="mailto:info@mail.com" class="text-cyan-100 hover:underline">info@mail.com</a></p>
       </div>
     </div>
   </div>

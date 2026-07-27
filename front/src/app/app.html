@@ -1,4 +1,4 @@
-<div class="bg-sky-100 min-h-screen flex flex-col">
+<div class="min-h-screen flex flex-col">
   <header>
     <nav class="bg-celeste text-white p-4 flex justify-between items-center font-bold">
       <a routerLink="/">
@@ -6,7 +6,7 @@
       </a>
       <div class="flex justify-between items-center gap-1 transition-colors text-center
       *:rounded *:duration-300 *:hover:bg-cyan-600 *:hover:text-black *:p-4 ">
-        <a class="flex overflow-hidden justify-center flex-wrap" routerLink="/catalog">BUSCAR <img src="search.svg" alt="" srcset=""></a>
+        <a routerLink="/catalog">CATALOGO</a>
         @if (admin()) {
           
         <a routerLink="/add">NUEVO PRODUCTO</a>
@@ -23,7 +23,7 @@
     <router-outlet></router-outlet>
   </main>
 
-  <footer class="bg-gray-800 text-white p-4 text-center">
+  <footer class="bg-gray-800 text-white p-8 text-center">
     <p>&copy; 2026 Liquidadora RGW</p>
   </footer>
 

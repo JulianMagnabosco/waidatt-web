@@ -1,11 +1,12 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { TableProducts } from '../table-products/table-products';
 import { Product } from '../../models/product';
-import { form, FormField } from '@angular/forms/signals';
+import { form, FormField, FormRoot, maxLength } from '@angular/forms/signals';
+import { ProductsService } from '../../services/products-service';
 
 @Component({
   selector: 'app-catalog',
-  imports: [TableProducts, FormField],
+  imports: [TableProducts, FormField, FormRoot],
   templateUrl: './catalog.html',
   styleUrl: './catalog.css',
 })
@@ -21,10 +22,50 @@ export class Catalog {
     { id: 8, name: 'Producto 8', description: 'Descripción del producto 8', price: 18.25, imageUrl: 'not-found.png' },
   ]);
 
+  productService = inject(ProductsService);
+
   searchModel = signal({
-    email: ''
+    name: '',
+    type: '',
+    order: ''
   });
 
-  searchForm = form(this.searchModel)
+  searchForm = form(this.searchModel,
+    (schemaPath) => {
+      maxLength(schemaPath.name, 100, { message: 'Name cannot exceed 100 characters' });
+    },{
+      submission: {
+        action: async (field) => {
+          const result = await this.search(field().value());
+          if (result.ok) return;
+          return {kind: 'serverError', message: 'Failed to submit form'};
+        },
+      },
+    },)
+
+    search(values: { name: string; type: string; order: string }): Promise<{ ok: boolean }> {
+      return new Promise((resolve) => {
+        this.productService.search(values).subscribe({
+          next: (response) => {
+            console.log('Search successful:', response);
+            resolve({ ok: true });
+          },
+          error: (error) => {
+            console.error('Search failed:', error);
+            resolve({ ok: false });
+          }
+        });
+      });
+    }
+
+  resetForm() {
+    this.searchModel.set({
+      name: '',
+      type: '',
+      order: ''
+    });
+  }
+
+
 
 }
