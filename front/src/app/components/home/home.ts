@@ -1,8 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { Carousel } from '../carousel/carousel';
 import { TableProducts } from '../table-products/table-products';
 import { Product } from '../../models/product';
 import { environment } from '../../../environments/environment.development';
+import { ProductsService } from '../../services/products-service';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +11,7 @@ import { environment } from '../../../environments/environment.development';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home {
+export class Home implements OnInit {
   whatsappNumber = environment.whatsappNumber;
   whatsappLink = environment.whatsappLink + "?text=Hola!%20Estoy%20interesado%20en%20sus%20productos.%20Quisiera%20saber%20más%20información.";
 
@@ -36,4 +37,17 @@ export class Home {
     { id: 7, name: 'Producto 7', description: 'Descripción del producto 7', price: 22.00, imageUrl: 'not-found.png' },
     { id: 8, name: 'Producto 8', description: 'Descripción del producto 8', price: 18.25, imageUrl: 'not-found.png' },
   ]);
+  
+  productsService = inject(ProductsService);
+  
+  ngOnInit() {
+    this.productsService.search({}).subscribe({
+      next: (response) => {
+        this.products.set(response);
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      }
+    });
+  }
 }

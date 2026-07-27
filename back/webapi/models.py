@@ -14,7 +14,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     in_stock = models.BooleanField(default=True)
 
-    description = models.TextField()
+    description = models.TextField(blank=True)
     size = models.CharField(max_length=10)
     product_type = models.ForeignKey(ProductType, on_delete=models.CASCADE)
 

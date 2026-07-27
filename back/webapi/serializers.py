@@ -8,6 +8,9 @@ class ProductTypeSerializer(serializers.ModelSerializer):
         read_only_fields = ['created_at']
 
 class ProductSerializer(serializers.ModelSerializer):
+
+    type_name = serializers.CharField(source='type.name', read_only=True)
+
     class Meta:
         model = Product
         fields = '__all__'

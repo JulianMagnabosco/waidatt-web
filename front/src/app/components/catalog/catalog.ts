@@ -1,8 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { TableProducts } from '../table-products/table-products';
 import { Product } from '../../models/product';
 import { form, FormField, FormRoot, maxLength } from '@angular/forms/signals';
-import { ProductsService } from '../../services/products-service';
+import { ProductFilter, ProductsService } from '../../services/products-service';
 
 @Component({
   selector: 'app-catalog',
@@ -10,7 +10,7 @@ import { ProductsService } from '../../services/products-service';
   templateUrl: './catalog.html',
   styleUrl: './catalog.css',
 })
-export class Catalog {
+export class Catalog implements OnInit {
   products = signal<Product[]>([
     { id: 1, name: 'Producto 1', description: 'Descripción del producto 1', price: 10.99, imageUrl: 'not-found.png' },
     { id: 2, name: 'Producto 2', description: 'Descripción del producto 2', price: 19.99, imageUrl: 'not-found.png' },
@@ -24,6 +24,14 @@ export class Catalog {
 
   productService = inject(ProductsService);
 
+  ngOnInit() {
+    this.productService.search({}).subscribe({
+      next: (response) => {
+        this.search({});
+      }
+    });
+  }
+
   searchModel = signal({
     name: '',
     type: '',
@@ -33,30 +41,40 @@ export class Catalog {
   searchForm = form(this.searchModel,
     (schemaPath) => {
       maxLength(schemaPath.name, 100, { message: 'Name cannot exceed 100 characters' });
-    },{
-      submission: {
-        action: async (field) => {
-          const result = await this.search(field().value());
-          if (result.ok) return;
-          return {kind: 'serverError', message: 'Failed to submit form'};
-        },
-      },
-    },)
+    }, {
+    submission: {
+      action: async (field) => {
 
-    search(values: { name: string; type: string; order: string }): Promise<{ ok: boolean }> {
-      return new Promise((resolve) => {
-        this.productService.search(values).subscribe({
-          next: (response) => {
-            console.log('Search successful:', response);
-            resolve({ ok: true });
-          },
-          error: (error) => {
-            console.error('Search failed:', error);
-            resolve({ ok: false });
-          }
-        });
+        const filters: ProductFilter = {
+          name: field().value().name,
+          type: field().value().type ? parseInt(field().value().type) : undefined,
+          order: field().value().order
+        };
+
+        const result = await this.search(filters);
+        if (result.ok) return;
+        return { kind: 'serverError', message: 'Failed to submit form' };
+      },
+    },
+  },)
+
+  search(values: ProductFilter): Promise<{ ok: boolean }> {
+    return new Promise((resolve) => {
+      this.productService.search(values).subscribe({
+        next: (response) => {
+          console.log('Search successful:', response);
+
+          this.products.set(response)
+
+          resolve({ ok: true });
+        },
+        error: (error) => {
+          console.error('Search failed:', error);
+          resolve({ ok: false });
+        }
       });
-    }
+    });
+  }
 
   resetForm() {
     this.searchModel.set({
