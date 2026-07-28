@@ -1,9 +1,10 @@
-<div class="p-4">
+<div class="p-4 flex flex-col items-center">
   <h1 class="text-3xl font-bold mb-4">
     Listado de productos
   </h1>
 
-  <table class="bg-white">
+  <div class="w-full overflow-scroll">
+    <table class="bg-white">
     <thead>
       <tr>
         <th class="border px-4 py-2">ID</th>
@@ -39,4 +40,14 @@
       }
     </tbody>
   </table>
+  </div>
+  
+<!-- paginado -->
+<div class="flex justify-center p-5 mt-10 mb-10 gap-4 font-bold">
+  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors">Anterior</button>
+  <div class="flex items-center gap-2">
+    <span class="text-lg text-center">Página 1 de 10</span>
+  </div>
+  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors">Siguiente</button>
+</div>
 </div>

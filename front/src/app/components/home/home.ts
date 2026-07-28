@@ -4,10 +4,11 @@ import { TableProducts } from '../table-products/table-products';
 import { Product } from '../../models/product';
 import { environment } from '../../../environments/environment.development';
 import { ProductsService } from '../../services/products-service';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-home',
-  imports: [Carousel, TableProducts],
+  imports: [Carousel, TableProducts, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

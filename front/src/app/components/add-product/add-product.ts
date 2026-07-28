@@ -1,6 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { form, FormField, FormRoot, max, maxLength, min, required } from '@angular/forms/signals';
 import { ProductsService } from '../../services/products-service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product } from '../../models/product';
 
 @Component({
   selector: 'app-add-product',
@@ -8,14 +10,21 @@ import { ProductsService } from '../../services/products-service';
   templateUrl: './add-product.html',
   styleUrl: './add-product.css',
 })
-export class AddProduct {
-  productModel = signal({
+export class AddProduct implements OnInit {
+  productService = inject(ProductsService);
+  activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+
+  productModel = signal<Product>({
+    id: 0,
     name: '',
     description: '',
     product_type: '',
     price: 0,
     imageUrl: '',
   });
+
+  editMode = signal<boolean>(false);
 
   productForm = form(
     this.productModel,
@@ -32,7 +41,13 @@ export class AddProduct {
     {
       submission: {
         action: async (field) => {
-          const result = await this.addProduct(field().value());
+          let result: { ok: boolean } | undefined;
+          if (this.editMode()) {
+            result = await this.editProduct(field().value());
+          } else {
+            result = await this.addProduct(field().value());
+          }
+          
           if (result.ok) return;
           return { kind: 'serverError', message: 'Failed to submit form' };
         },
@@ -40,22 +55,47 @@ export class AddProduct {
     },
   );
 
-  productService = inject(ProductsService);
+  ngOnInit(): void {
+    const productId = this.activatedRoute.snapshot.paramMap.get('id');
+    if (!productId) return;
+    this.productService.getProduct(productId).subscribe({
+      next: (data) => {
+        this.productModel.set(data);
+        this.editMode.set(true);
+      },
+      error: (err) => {
+        this.editMode.set(false);
+      },
+    });
+  }
 
   addProduct(values: any): Promise<{ ok: boolean }> {
     return new Promise((resolve) => {
       this.productService.addProduct(values).subscribe({
         next: (response) => {
           console.log('Save successful:', response);
-          alert("Exito, se a guardado el producto")
+          alert('Exito, se a guardado el producto');
 
-          this.productModel.set({
-            name: '',
-            description: '',
-            product_type: '',
-            price: 0,
-            imageUrl: '',
-          });
+          this.router.navigateByUrl('/product/' + response.id);
+
+          resolve({ ok: true });
+        },
+        error: (error) => {
+          console.error('Save failed:', error);
+          resolve({ ok: false });
+        },
+      });
+    });
+  }
+
+  editProduct(values: any): Promise<{ ok: boolean }> {
+    return new Promise((resolve) => {
+      this.productService.modProduct(values).subscribe({
+        next: (response) => {
+          console.log('Save successful:', response);
+          alert('Exito, se a guardado el producto');
+
+          this.router.navigateByUrl('/product/' + response.id);
 
           resolve({ ok: true });
         },

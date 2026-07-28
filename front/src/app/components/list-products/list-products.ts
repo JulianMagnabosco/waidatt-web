@@ -15,6 +15,10 @@ export class ListProducts {
     new Product(2, 'Producto 2', 'Descripción del producto 2',"Indumentaria", 19.99),
   ]);
 
+  editProduct(arg0: number) {
+    throw new Error('Method not implemented.');
+  }
+  
   deleteProduct(arg0: number) {
     throw new Error('Method not implemented.');
   }

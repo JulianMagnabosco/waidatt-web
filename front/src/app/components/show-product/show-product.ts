@@ -1,7 +1,8 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductsService } from '../../services/products-service';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { UserService } from '../../services/user-service';
 
 @Component({
   selector: 'app-show-product',
@@ -11,11 +12,15 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 })
 export class ShowProduct implements OnInit {
   productsService = inject(ProductsService);
+  userService = inject(UserService);
   activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
 
   product = signal<Product | undefined>(undefined);
 
   notFound = signal<boolean>(false);
+
+  userAdmin = signal<boolean>(false);
 
   ngOnInit(): void {
     const productId = this.activatedRoute.snapshot.paramMap.get('id');
@@ -26,5 +31,23 @@ export class ShowProduct implements OnInit {
     error: (err) => {
       this.notFound.set(true)
     },});
+
+    this.userAdmin.set(this.userService.isLoggedIn())
+  }
+
+  deleteProduct(){
+    if(confirm("Seguro que quiere eliminar el producto de forma PERMANENTE?")){
+      this.productsService.deleteProduct(this.product()?.id||-1).subscribe({next: (data) => {
+      alert("Producto eliminado")
+      this.router.navigateByUrl("/");
+    },
+    error: (err) => {
+      alert("Producto eliminado")
+    },});
+    }
+  }
+  
+  editProduct(){
+      this.router.navigateByUrl("/edit/"+this.product()?.id);
   }
 }

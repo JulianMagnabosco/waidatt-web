@@ -35,4 +35,11 @@ export class ProductsService {
   addProduct(data:any){
     return this.http.post<Product>(`${this.apiUrl}/products/`, data);
   }
+  modProduct(data:any){
+    return this.http.put<Product>(`${this.apiUrl}/products/${data.id}/`, data);
+  }
+  
+  deleteProduct(id:string|number){
+    return this.http.delete(`${this.apiUrl}/products/${id}/`);
+  }
 }

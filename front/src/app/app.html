@@ -8,8 +8,10 @@
       *:rounded-xl *:duration-300 *:hover:text-black *:p-4 ">
         <a routerLink="/catalog">CATALOGO</a>
         @if (userLoggedIn()) {
-          
-        <a routerLink="/add">NUEVO PRODUCTO</a>
+        
+          |
+        <a routerLink="/add">NUEVO</a>
+        <!-- <a routerLink="/list">LISTADO</a> -->
         <a class="bg-red-900" (click)="logout()">CERRAR SESION</a>
         }@else {
           
