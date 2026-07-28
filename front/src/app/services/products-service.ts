@@ -1,12 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Product } from '../models/product';
+import { ImageProduct, Product } from '../models/product';
 
 export interface ProductFilter {
   name?: string;
   product_type?: string;
   ordering?: string;
+}
+export interface ProductPage {
+  count: number;
+  next: any;
+  previus: any;
+  results: Product[];
 }
 @Service()
 export class ProductsService {
@@ -25,7 +31,7 @@ export class ProductsService {
     if (filters.ordering) {
       params = params.set('ordering', filters.ordering);
     }
-    return this.http.get<Product[]>(`${this.apiUrl}/products/`, { params: params });
+    return this.http.get<ProductPage>(`${this.apiUrl}/products/`, { params: params });
   }
 
   getProduct(id:string|number){
@@ -41,5 +47,16 @@ export class ProductsService {
   
   deleteProduct(id:string|number){
     return this.http.delete(`${this.apiUrl}/products/${id}/`);
+  }
+
+  //IMAGENES
+  subirImagen(productoId: number, archivo: File) {
+    const formData = new FormData();
+    formData.append('image', archivo);
+    return this.http.post<ImageProduct>(`${this.apiUrl}/products/${productoId}/add_image/`, formData);
+  }
+
+  eliminarImagen(productoId: number, imagenId: number){
+    return this.http.delete<void>(`${this.apiUrl}/products/${productoId}/images/${imagenId}/`);
   }
 }

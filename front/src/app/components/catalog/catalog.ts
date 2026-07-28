@@ -59,7 +59,7 @@ export class Catalog implements OnInit {
         next: (response) => {
           console.log('Search successful:', response);
 
-          this.products.set(response);
+          this.products.set(response.results);
 
           resolve({ ok: true });
         },

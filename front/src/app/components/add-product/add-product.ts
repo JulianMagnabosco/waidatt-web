@@ -21,7 +21,6 @@ export class AddProduct implements OnInit {
     description: '',
     product_type: '',
     price: 0,
-    imageUrl: '',
   });
 
   editMode = signal<boolean>(false);
@@ -42,6 +41,7 @@ export class AddProduct implements OnInit {
       submission: {
         action: async (field) => {
           let result: { ok: boolean } | undefined;
+          //decide si edit o nuevo
           if (this.editMode()) {
             result = await this.editProduct(field().value());
           } else {
@@ -55,6 +55,7 @@ export class AddProduct implements OnInit {
     },
   );
 
+  // CARGA EN CASO DE EDIT
   ngOnInit(): void {
     const productId = this.activatedRoute.snapshot.paramMap.get('id');
     if (!productId) return;
@@ -69,6 +70,7 @@ export class AddProduct implements OnInit {
     });
   }
 
+  //NUEVO
   addProduct(values: any): Promise<{ ok: boolean }> {
     return new Promise((resolve) => {
       this.productService.addProduct(values).subscribe({
@@ -88,6 +90,7 @@ export class AddProduct implements OnInit {
     });
   }
 
+  //EDITAR
   editProduct(values: any): Promise<{ ok: boolean }> {
     return new Promise((resolve) => {
       this.productService.modProduct(values).subscribe({

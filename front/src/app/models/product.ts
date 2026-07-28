@@ -1,10 +1,15 @@
+export interface ImageProduct {
+  id: number;
+  image: string;  // URL
+  image_order: number;
+}
 export class Product {
     id: number;
     name: string;
     description: string;
     product_type: string;
     price: number;
-    imageUrl?: string;
+    images?: ImageProduct[];
 
     constructor(id: number, name: string, description: string, product_type: string, price: number) {
         this.id = id;

@@ -3,10 +3,12 @@ import { Product } from '../../models/product';
 import { ProductsService } from '../../services/products-service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user-service';
+import { AddImages } from '../add-images/add-images';
+import { Carousel, CarouselSlide } from "../carousel/carousel";
 
 @Component({
   selector: 'app-show-product',
-  imports: [RouterLink],
+  imports: [RouterLink, AddImages, Carousel],
   templateUrl: './show-product.html',
   styleUrl: './show-product.css',
 })
@@ -22,11 +24,16 @@ export class ShowProduct implements OnInit {
 
   userAdmin = signal<boolean>(false);
 
+  slides = signal<CarouselSlide[]>([]);
+
   ngOnInit(): void {
     const productId = this.activatedRoute.snapshot.paramMap.get('id');
     if (!productId) return;
     this.productsService.getProduct(productId).subscribe({next: (data) => {
       this.product.set(data)
+      this.slides.set((data.images ?? []).map((val, index) => {
+        return { id: val.image_order, imageUrl: val.image, title: '' } as CarouselSlide
+      }))
     },
     error: (err) => {
       this.notFound.set(true)

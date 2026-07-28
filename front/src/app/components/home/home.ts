@@ -36,7 +36,7 @@ export class Home implements OnInit {
   ngOnInit() {
     this.productsService.search({}).subscribe({
       next: (response) => {
-        this.products.set(response);
+        this.products.set(response.results);
       },
       error: (error) => {
         console.error('Error fetching products:', error);

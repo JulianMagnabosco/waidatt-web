@@ -17,3 +17,17 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+def product_image_path(instance, filename):
+    """Genera la ruta donde se guardará cada imagen subida."""
+    return f'products/{instance.product.id or "tmp"}/{filename}'
+class ImageProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to=product_image_path)
+    image_order = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        ordering = ['image_order']
+
+    def __str__(self):
+        return f'Image of {self.product.name}'

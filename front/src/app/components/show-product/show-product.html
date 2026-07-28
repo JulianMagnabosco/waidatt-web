@@ -5,13 +5,18 @@
 
 <div class="mb-5 shadow-2xl p-5 bg-sky-50">
   @if (product()) {
-  <div class="flex justify-center">
-    <img class="rounded-md shadow-2xl" src="{{product()?.imageUrl || 'not-found.png'}}" alt="">
+  <div class="flex justify-center flex-wrap">
+    <!-- <img class="rounded-md aspect-square shadow-2xl max-w-2xl" src="{{product()?.images?.at(0)?.image || 'not-found.png'}}" alt=""> -->
+    <div class="max-w-2xl">
+      <app-carousel [slides]="slides()"></app-carousel>
+    </div>
+
     <div class="p-5">
       <h1 class="text-3xl bold uppercase">{{product()?.name}}</h1>
       <div class="p-1 rounded-2xl bg-sky-300 text-black font-bold uppercase">{{product()?.product_type}}</div>
       <div class="text-2xl">${{product()?.price}}</div>
       <div>{{product()?.description}}</div>
+      <div class="text-sm text-sky-200">{{product()?.id}}</div>
     </div>
   </div>
   }
@@ -29,8 +34,9 @@
   Seccion de administrador (SOLO ADMINISTRADORES)
 </div>
 
-<div class="mb-8 shadow-2xl p-5 bg-red-50 flex justify-center gap-3 text-xl">
-  <a class="bg-sky-400 p-2 text-white rounded-2xl cursor-pointer flex justify-center" (click)="editProduct()"> 
+<div class="mb-8 shadow-2xl p-5 bg-red-50">
+  <div class=" flex justify-center gap-3 text-xl">
+  <a class="bg-sky-400 p-2 text-white rounded-2xl cursor-pointer flex justify-center" (click)="editProduct()">
     <img src="edit.svg" alt="">
     Editar
   </a>
@@ -38,5 +44,9 @@
     <img src="delete.svg" alt="">Eliminar</a>
 </div>
 
+@if (product()) {
+  <app-add-images [productId]="product()?.id"></app-add-images>
+}
+</div>
 
 }
