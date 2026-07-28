@@ -14,10 +14,11 @@
 
     <div>
       <label class="w-1/3 text-end" for="type">Tipo: </label>
-      <select class="bg-white p-2 rounded-md w-2/3" [formField]="productForm.product_type">
-        <option value="indumentaria">Indumentaria</option>
-        <option value="calzado">Calzado</option>
-        <option value="elementos-seguridad">Elementos de Seguridad</option>
+      <select class="bg-white p-2 rounded-md w-2/3 capitalize" [formField]="productForm.product_type">
+        
+        @for (item of productTypes; track $index) {
+        <option [value]="item">{{item}}</option>
+        }
       </select>
     </div>
 

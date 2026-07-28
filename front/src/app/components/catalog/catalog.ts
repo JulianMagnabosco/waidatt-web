@@ -1,9 +1,10 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { TableProducts } from '../table-products/table-products';
 import { Product } from '../../models/product';
-import { form, FormField, FormRoot, maxLength } from '@angular/forms/signals';
+import { form, FormField, FormRoot, maxLength, submit } from '@angular/forms/signals';
 import { ProductFilter, ProductsService } from '../../services/products-service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-catalog',
@@ -13,12 +14,15 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class Catalog implements OnInit {
   products = signal<Product[]>([]);
+  productTypes=environment.product_types
 
   productService = inject(ProductsService);
   activatedRoute = inject(ActivatedRoute);
+  router = inject(Router);
+  canNextPage=signal<boolean>(false)
 
   ngOnInit() {
-    const data = this.activatedRoute.queryParams.subscribe({
+    this.activatedRoute.queryParams.subscribe({
       next: (params) => {
         this.search(params);
       },
@@ -28,7 +32,8 @@ export class Catalog implements OnInit {
   searchModel = signal({
     name: '',
     product_type: '',
-    ordering: 'name',
+    ordering: '-name',
+    page: 1,
   });
 
   searchForm = form(
@@ -43,6 +48,7 @@ export class Catalog implements OnInit {
             name: field().value().name,
             product_type: field().value().product_type,
             ordering: field().value().ordering,
+            page: field().value().page,
           };
 
           const result = await this.search(filters);
@@ -60,6 +66,7 @@ export class Catalog implements OnInit {
           console.log('Search successful:', response);
 
           this.products.set(response.results);
+          this.canNextPage.set(!!response.next)
 
           resolve({ ok: true });
         },
@@ -71,11 +78,47 @@ export class Catalog implements OnInit {
     });
   }
 
+  nextPage() {
+    if (!this.canNextPage()) return;
+    this.searchModel.update((valueOld) => {
+      return {
+        name: valueOld.name,
+        product_type: valueOld.product_type,
+        ordering: valueOld.ordering,
+        page: valueOld.page + 1,
+      };
+    });
+          this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: this.searchModel(),
+            queryParamsHandling: 'merge', // opcional: mergea con los params existentes
+          });
+  }
+
+  prevPage() {
+    if (this.searchModel().page <= 1) return;
+
+    this.searchModel.update((valueOld) => {
+      return {
+        name: valueOld.name,
+        product_type: valueOld.product_type,
+        ordering: valueOld.ordering,
+        page: valueOld.page - 1,
+      };
+    });
+          this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: this.searchModel(),
+            queryParamsHandling: 'merge', // opcional: mergea con los params existentes
+          });
+  }
+
   resetForm() {
     this.searchModel.set({
       name: '',
       product_type: '',
-      ordering: '',
+      ordering: '-name',
+      page: 1,
     });
   }
 }

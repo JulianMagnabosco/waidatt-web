@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { Carousel } from '../carousel/carousel';
 import { TableProducts } from '../table-products/table-products';
 import { Product } from '../../models/product';
-import { environment } from '../../../environments/environment.development';
+import { environment } from '../../../environments/environment';
 import { ProductsService } from '../../services/products-service';
 import { RouterLink } from "@angular/router";
 

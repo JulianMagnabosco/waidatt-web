@@ -7,6 +7,7 @@ export interface ProductFilter {
   name?: string;
   product_type?: string;
   ordering?: string;
+  page?: number;
 }
 export interface ProductPage {
   count: number;
@@ -30,6 +31,9 @@ export class ProductsService {
     }
     if (filters.ordering) {
       params = params.set('ordering', filters.ordering);
+    }
+    if (filters.page) {
+      params = params.set('page', filters.page);
     }
     return this.http.get<ProductPage>(`${this.apiUrl}/products/`, { params: params });
   }

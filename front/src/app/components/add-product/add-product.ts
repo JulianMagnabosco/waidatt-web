@@ -3,6 +3,7 @@ import { form, FormField, FormRoot, max, maxLength, min, required } from '@angul
 import { ProductsService } from '../../services/products-service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../../models/product';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-add-product',
@@ -14,6 +15,7 @@ export class AddProduct implements OnInit {
   productService = inject(ProductsService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+    productTypes=environment.product_types
 
   productModel = signal<Product>({
     id: 0,

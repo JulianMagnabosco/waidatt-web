@@ -15,11 +15,11 @@
      <div class="flex justify-center items-center flex-wrap gap-2 mt-2">
       <span class="text-center max-w-full">
         Tipo:
-      <select class="bg-sky-100 p-2 rounded-md" [formField]="searchForm.product_type">
+      <select class="bg-sky-100 p-2 rounded-md capitalize" [formField]="searchForm.product_type">
         <option value="">Todos</option>
-        <option value="indumentaria">Indumentaria</option>
-        <option value="calzado">Calzado</option>
-        <option value="elementos-seguridad">Elementos de Seguridad</option>
+        @for (item of productTypes; track $index) {
+          <option [value]="item">{{item}}</option>
+        }
       </select>
       </span>
       <span class="text-center max-w-full">
@@ -43,9 +43,14 @@
 
 <!-- paginado -->
 <div class="flex justify-center p-5 mt-10 mb-10 gap-4 font-bold">
-  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors">Anterior</button>
+  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors"
+  (click)="prevPage()">
+    Anterior
+  </button>
   <div class="flex items-center gap-2">
     <span class="text-lg text-center">Página 1 de 10</span>
   </div>
-  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors">Siguiente</button>
+  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors"
+  (click)="nextPage()">
+  Siguiente</button>
 </div>
