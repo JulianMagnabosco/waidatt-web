@@ -20,6 +20,7 @@ export const httpInterceptor: HttpInterceptorFn = (req, next) => {
         auth.logout();
         alert('Tu sesión expiró. Por favor, iniciá sesión nuevamente.');
         router.navigate(['/']); // volver al inicio
+        window.location.reload();
       }
       return throwError(() => error);
     })

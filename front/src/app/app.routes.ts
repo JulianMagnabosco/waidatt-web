@@ -5,6 +5,7 @@ import { ListProducts } from './components/list-products/list-products';
 import { Login } from './components/login/login';
 import { AddProduct } from './components/add-product/add-product';
 import { ShowProduct } from './components/show-product/show-product';
+import { allowGuard } from './guards/allow-guard';
 
 export const routes: Routes = [
   {
@@ -30,11 +31,13 @@ export const routes: Routes = [
   },
   {
     path: 'add',
-    component: AddProduct
+    component: AddProduct,
+    canActivate: [allowGuard]
   },
   {
     path: 'edit/:id',
-    component: AddProduct
+    component: AddProduct,
+    canActivate: [allowGuard]
   },
   {
     path: 'login',
