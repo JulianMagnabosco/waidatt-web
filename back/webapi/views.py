@@ -47,5 +47,6 @@ class ProductViewSet(viewsets.ModelViewSet):
             return Response({'detail': 'image no encontrada.'}, status=status.HTTP_404_NOT_FOUND)
         
     def get_serializer_context(self):
-        return {'request': self.request}
+        context = super().get_serializer_context()
+        return context
 
