@@ -12,5 +12,3 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = '__all__'
         read_only_fields = ['created_at', 'updated_at']
-    def get_serializer_context(self):
-        return {'request': self.request}

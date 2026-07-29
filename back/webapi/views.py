@@ -45,4 +45,7 @@ class ProductViewSet(viewsets.ModelViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         except ImageProduct.DoesNotExist:
             return Response({'detail': 'image no encontrada.'}, status=status.HTTP_404_NOT_FOUND)
+        
+    def get_serializer_context(self):
+        return {'request': self.request}
 
