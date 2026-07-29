@@ -10,6 +10,7 @@ export class UserService {
   apiUrl = environment.apiUrl;
 
   isLoggedIn = signal<boolean>(!!localStorage.getItem('access_token'));
+  username = signal<string|null>(localStorage.getItem('username'));
 
   // login(data: { username: string; password: string }) {
   //     return this.http.post(`${this.apiUrl}/login`, data);
@@ -19,6 +20,7 @@ export class UserService {
       .pipe(tap(res => {
         localStorage.setItem('access_token', res.access);
         localStorage.setItem('refresh_token', res.refresh);
+        localStorage.setItem('username', data.username);
         this.isLoggedIn.set(true);
       }));
   }
@@ -26,6 +28,7 @@ export class UserService {
   logout(): void {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('username');
     this.isLoggedIn.set(false);
   }
 

@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user-service';
 import { AddImages } from '../add-images/add-images';
 import { Carousel, CarouselSlide } from "../carousel/carousel";
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-show-product',
@@ -17,6 +18,8 @@ export class ShowProduct implements OnInit {
   userService = inject(UserService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+
+  whatsappLink = signal<string>(""); 
 
   product = signal<Product | undefined>(undefined);
 
@@ -32,8 +35,13 @@ export class ShowProduct implements OnInit {
     this.productsService.getProduct(productId).subscribe({next: (data) => {
       this.product.set(data)
       this.slides.set((data.images ?? []).map((val, index) => {
-        return { id: val.image_order, imageUrl: val.image, title: '' } as CarouselSlide
+        return { id: val.id, imageUrl: val.image, title: '' } as CarouselSlide
       }))
+      const sanatizedWhatsappLink = encodeURIComponent(environment.whatsappLink+
+        "Hola, queria cunsultar sobre su producto: "+
+        this.product()?.name
+      )
+      this.whatsappLink.set(sanatizedWhatsappLink)
     },
     error: (err) => {
       this.notFound.set(true)

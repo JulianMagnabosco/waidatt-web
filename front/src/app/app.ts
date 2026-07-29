@@ -18,6 +18,7 @@ export class App {
   userService = inject(UserService);
 
   userLoggedIn = this.userService.isLoggedIn;
+  user = this.userService.username;
 
   logout() {
     this.userService.logout();
