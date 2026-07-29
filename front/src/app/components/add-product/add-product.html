@@ -27,6 +27,12 @@
       <textarea class="w-2/3 rounded-md bg-white p-1" [formField]="productForm.description"></textarea>
     </div>
 
+    <div class="text-red-500 flex-col font-bold">
+      @for (errorString of productForm().errorSummary(); track $index) {
+        <div>&DoubleRightArrow;{{errorString.message}}</div>
+      }
+    </div>
+
     <div class="text-center">
       <button type="submit" class="bg-cyan-700 text-white rounded-md p-2 hover:bg-cyan-500">
       Guardar

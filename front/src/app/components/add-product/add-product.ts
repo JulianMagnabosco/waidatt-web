@@ -30,14 +30,15 @@ export class AddProduct implements OnInit {
   productForm = form(
     this.productModel,
     (schemaPath) => {
-      required(schemaPath.name, { message: 'Name needed' });
-      required(schemaPath.description, { message: 'Description needed' });
-      maxLength(schemaPath.name, 100, { message: 'Name cannot exceed 100 characters' });
+      required(schemaPath.name, { message: 'Nombre es requerido' });
+      required(schemaPath.price, { message: 'Precio es requerido' });
+      required(schemaPath.product_type, { message: 'Tipo de roducto requerido' });
+      maxLength(schemaPath.name, 100, { message: 'Nombre no debe superar los 100 caracteres' });
       maxLength(schemaPath.description, 500, {
-        message: 'Description cannot exceed 500 characters',
+        message: 'Nombre no debe superar los 500 caracteres',
       });
 
-      min(schemaPath.price, 1, { message: 'Precio minimo' });
+      min(schemaPath.price, 1, { message: 'Precio minimo es 1' });
     },
     {
       submission: {
