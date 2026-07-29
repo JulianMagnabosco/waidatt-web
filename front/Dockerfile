@@ -28,5 +28,5 @@ RUN npm run build -- --configuration production
 
 # Etapa final: solo dejamos los estáticos listos para copiar
 FROM alpine:3.20
-COPY --from=build /app/dist/mi-app/browser /dist
+COPY --from=build /app/dist/webpage-waidatt/browser /dist
 CMD ["true"]
