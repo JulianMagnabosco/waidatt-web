@@ -17,7 +17,5 @@ COPY . .
 
 EXPOSE 8080
 
-#En caso de ser commandos internos
-
-
+#-----------En caso de ser commandos internos
 # CMD ["gunicorn", "mi_proyecto.wsgi:application", "--bind", "0.0.0.0:8000"]
