@@ -14,12 +14,12 @@ import { environment } from '../../../environments/environment';
 })
 export class Catalog implements OnInit {
   products = signal<Product[]>([]);
-  productTypes=environment.product_types
+  productTypes = environment.product_types;
 
   productService = inject(ProductsService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
-  canNextPage=signal<boolean>(false)
+  canNextPage = signal<boolean>(false);
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe({
@@ -66,7 +66,7 @@ export class Catalog implements OnInit {
           console.log('Search successful:', response);
 
           this.products.set(response.results);
-          this.canNextPage.set(!!response.next)
+          this.canNextPage.set(!!response.next);
 
           resolve({ ok: true });
         },
@@ -88,11 +88,11 @@ export class Catalog implements OnInit {
         page: valueOld.page + 1,
       };
     });
-          this.router.navigate([], {
-            relativeTo: this.activatedRoute,
-            queryParams: this.searchModel(),
-            queryParamsHandling: 'merge', // opcional: mergea con los params existentes
-          });
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.searchModel(),
+      queryParamsHandling: 'merge', // opcional: mergea con los params existentes
+    });
   }
 
   prevPage() {
@@ -106,11 +106,11 @@ export class Catalog implements OnInit {
         page: valueOld.page - 1,
       };
     });
-          this.router.navigate([], {
-            relativeTo: this.activatedRoute,
-            queryParams: this.searchModel(),
-            queryParamsHandling: 'merge', // opcional: mergea con los params existentes
-          });
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.searchModel(),
+      queryParamsHandling: 'merge', // opcional: mergea con los params existentes
+    });
   }
 
   resetForm() {
@@ -120,5 +120,27 @@ export class Catalog implements OnInit {
       ordering: '-name',
       page: 1,
     });
+  }
+
+  addCart(id: number) {
+    let data = {
+      id: id,
+      quantity: 1,
+    };
+    this.productService.addCart(data).subscribe({
+        next: (value) => {
+          alert( 'Añadido al carrito');
+          // alert("Añadido al carrito");
+        },
+        error: (err) => {
+          // alert("Hubo un error al añadir al carrito");
+          if (err.status == 403 || err.status == 401) {
+            return;
+          }
+          alert( 
+            'Error inesperado en el servidor, revise su conexion a internet'
+          );
+        },
+      })
   }
 }

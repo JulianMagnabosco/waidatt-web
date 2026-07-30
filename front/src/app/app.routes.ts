@@ -6,6 +6,7 @@ import { Login } from './components/login/login';
 import { AddProduct } from './components/add-product/add-product';
 import { ShowProduct } from './components/show-product/show-product';
 import { allowGuard } from './guards/allow-guard';
+import { Cart } from './components/cart/cart';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,10 @@ export const routes: Routes = [
   {
     path: 'product/:id',
     component: ShowProduct
+  },
+  {
+    path: 'cart',
+    component: Cart
   },
   {
     path: 'add',

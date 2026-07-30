@@ -38,7 +38,7 @@
 
 <!-- listado -->
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
-  <app-table-products [products]="products()"></app-table-products>
+  <app-table-products [products]="products()" (addCartEvent)="addCart($event)"></app-table-products>
 </div>
 
 <!-- paginado -->

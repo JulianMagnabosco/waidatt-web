@@ -43,4 +43,25 @@ export class Home implements OnInit {
       }
     });
   }
+  addCart(id: number) {
+    let data = {
+      id: id,
+      quantity: 1,
+    };
+    this.productsService.addCart(data).subscribe({
+        next: (value) => {
+          alert( 'Añadido al carrito');
+          // alert("Añadido al carrito");
+        },
+        error: (err) => {
+          // alert("Hubo un error al añadir al carrito");
+          if (err.status == 403 || err.status == 401) {
+            return;
+          }
+          alert( 
+            'Error inesperado en el servidor, revise su conexion a internet'
+          );
+        },
+      })
+  }
 }

@@ -1,0 +1,89 @@
+<div class="container mx-auto">
+  <div class="flex justify-center mb-2">
+    <div class="text-3xl text-shadow-lg rounded-md p-2 bg-white w-auto font-bold">Tu Carrito</div>
+  </div>
+
+  @if (list().length<=0) {
+    <div class="p-1">
+    <h2 class="text-center rounded-md bg-celeste-1 p-2"> Sin obras en el carrito</h2>
+  </div>
+  }
+
+  @if (list().length>0) {
+  <div class="flex flex-col sm:flex-row">
+
+    <div class="basis-8/12 ">
+      @for (c of list(); track $index) {
+      <div class="flex shadow-md rounded-md p-2 bg-white mb-2 relative" >
+        <button class="rounded-md text-2xl p-2 hover:bg-red-300 absolute top-0 end-0" (click)="remove($index)">
+          <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 384 512">
+            <path
+              d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+          </svg>
+        </button>
+        <img class="rounded-2 h-100 me-4" style="max-height: 8rem" [src]=" c.images?.at(0)?.image || 'not-found.png' " [alt]="c.id">
+        <div class="flex flex-col justify-center  w-full">
+          <div class="text-lg capitalize">
+            {{c.name}}
+          </div>
+          <div>
+            ${{c.price || 0}} <span class="line-through text-sm" [hidden]="c.price==c.price">${{c.price ||
+              0}}</span>
+          </div>
+          <div class="sm:flex flex-wrap items-center">
+            <div class="font-bold">
+              Unidades:&nbsp;
+            </div>
+            <div class="flex">
+              <input
+                class="p-2 max-w-20 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 valid:focus:ring-celeste-2 valid:focus:border-celeste-1 invalid:ring-red-200 invalid:border-red-800 invalid:bg-red-200"
+                type="number" [(ngModel)]="liststocks[$index]" min="1">
+                @if (liststocks[$index]!=c.quantity) {
+                <button
+                  class="block bg-white border border-celeste-2 rounded-lg text-celeste-2 mx-1 p-3 h-min transition-all disabled:bg-slate-100 enabled:hover:bg-celeste-1 enabled:hover:scale-105 text-center disabled:text-gray-300"
+                  (click)="update($index)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 448 512">
+                    <path fill="celesteColor"
+                      d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z" />
+                  </svg>
+                </button>
+                <button
+                  class="block bg-white border border-celeste-2 rounded-lg text-celeste-2 p-3 h-min transition-all hover:bg-celeste-1 hover:scale-105 text-center"
+                  (click)="notupdate($index)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="size-4" viewBox="0 0 384 512">
+                    <path
+                      d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+                  </svg>
+                </button>}
+            </div>
+          </div>
+
+          <div>
+            <a class="text-celeste-2 underline decoration-celeste-2" [routerLink]="['/product/'+c.id]">
+              Ver Producto en la tienda
+            </a>
+          </div>
+        </div>
+      </div>}
+    </div>
+
+    <div class="basis-4/12 mx-auto my-3 sm:mx-3 w-max order-first sm:order-last">
+      <div class="rounded-md shadow-md bg-white text-center p-3">
+        <div class="text-2xl">Resumen de Compra</div>
+        <div class="mb-3">
+          Total: <span class="font-bold">ARS$ {{total}}</span>
+        </div>
+        <div class="mb-3">
+          <a class="bg-celeste rounded-md text-white p-2 transition-all hover:scale-105 hover:rounded-md hover:brightness-110"
+            [href]="buyUrl">
+            Comprar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+</div>
+
+<div>
+</div>

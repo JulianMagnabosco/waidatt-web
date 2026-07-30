@@ -1,6 +1,7 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { RouterLink } from "@angular/router";
+import { required } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-table-products',
@@ -51,4 +52,7 @@ export class TableProducts {
       product_type: ''
     },
   ]);
+  
+  
+  addCartEvent = output<number>();
 }

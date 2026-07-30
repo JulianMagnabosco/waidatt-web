@@ -31,7 +31,7 @@
     </h1>
 
     <div class="p-5 mx-auto max-w-6xl">
-      <app-table-products [products]="products()"></app-table-products>
+      <app-table-products [products]="products()" (addCartEvent)="addCart($event)"></app-table-products>
     </div>
 
     <div class="text-center">
