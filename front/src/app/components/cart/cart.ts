@@ -10,9 +10,9 @@ import { FormsModule } from '@angular/forms';
 // !!!!PENDIENTE A ACTUALIZAR A ANGULAR 22
 //  !!!!PENDIENTE A ACTUALIZAR A ANGULAR 22
 
-class CartItem extends Product{
-    cartId: number=1;
-    quantity: number=1;
+class CartItem extends Product {
+  cartId: number = 1;
+  quantity: number = 1;
 }
 
 @Component({
@@ -63,44 +63,44 @@ export class Cart implements OnInit {
     };
 
     this.service.getCart(data).subscribe({
-        next: (value) => {
-          // this.elements=value["elements"]
-          this.list.set(value['list'] as any[]);
-          // this.pages=value["pages"]
+      next: (value) => {
+        // this.elements=value["elements"]
+        this.list.set(value['list'] as any[]);
+        // this.pages=value["pages"]
 
-          this.total = 0;
-          console.log(this.list());
-          this.list().forEach((element, index) => {
-            this.searchItem(element.id.toString(), index);
-          });
-        },
-        error: (err) => {
-          alert('Error inesperado en el servidor, revise su conexion a internet');
-        },
-      })
+        this.total = 0;
+        console.log(this.list());
+        this.list().forEach((element, index) => {
+          this.searchItem(element.id.toString(), index);
+        });
+      },
+      error: (err) => {
+        alert('Error inesperado en el servidor, revise su conexion a internet');
+      },
+    });
   }
 
   searchItem(id: string, index: number) {
     const quantity = this.list()[index].quantity;
     this.liststocks.push(quantity);
     this.service.getProduct(id).subscribe({
-        next: (value) => {
-          let newItem=value as CartItem
-          // this.list()[index] = newItem;
-          // this.list()[index].quantity = quantity;
-          this.list.update((value)=> {
-            value[index] = newItem; 
-            value[index].quantity = quantity;
-            return value;
-          });
+      next: (value) => {
+        let newItem = value as CartItem;
+        // this.list()[index] = newItem;
+        // this.list()[index].quantity = quantity;
+        this.list.update((value) => {
+          value[index] = newItem;
+          value[index].quantity = quantity;
+          return value;
+        });
 
-          this.total += newItem.price * newItem.quantity;
-        },
-        error: (err) => {
-          console.log(err);
-          alert( 'Error inesperado en el servidor, revise su conexion a internet');
-        },
-      })
+        this.total += newItem.price * newItem.quantity;
+      },
+      error: (err) => {
+        console.log(err);
+        alert('Error inesperado en el servidor, revise su conexion a internet');
+      },
+    });
   }
 
   update(index: number) {
@@ -111,25 +111,31 @@ export class Cart implements OnInit {
       id: this.list()[index].id,
       quantity: this.liststocks[index],
     };
-      this.service.editCart(data).subscribe({
-        next: (value) => {
-          if (this.liststocks[index] <= 0) {
-            // this.list.splice(index, 1);
-            this.list.update((value)=> {value.splice(index, 1); return value});
-            this.liststocks.splice(index, 1);
-            // cAlert("success","Eliminado")
-          } else {
-            // this.list[index].quantity = this.liststocks[index];
-            this.list.update((value)=> {value[index].quantity = this.liststocks[index]; return value});
-            // cAlert("success","Añadido al carrito")
-          }
+    this.service.editCart(data).subscribe({
+      next: (value) => {
+        if (this.liststocks[index] <= 0) {
+          // this.list.splice(index, 1);
+          this.list.update((value) => {
+            value.splice(index, 1);
+            return value;
+          });
+          this.liststocks.splice(index, 1);
+          // cAlert("success","Eliminado")
+        } else {
+          // this.list[index].quantity = this.liststocks[index];
+          this.list.update((value) => {
+            value[index].quantity = this.liststocks[index];
+            return value;
+          });
+          // cAlert("success","Añadido al carrito")
+        }
 
-          this.getTotal();
-        },
-        error: (err) => {
-          alert('Error inesperado en el servidor, revise su conexion a internet');
-        },
-      })
+        this.getTotal();
+      },
+      error: (err) => {
+        alert('Error inesperado en el servidor, revise su conexion a internet');
+      },
+    });
   }
   notupdate(index: number) {
     this.liststocks[index] = this.list()[index].quantity;
@@ -144,7 +150,6 @@ export class Cart implements OnInit {
     let items = '';
     let index = 0;
     this.list().forEach((c) => {
-      
       items += `+${c.quantity}x+"${c.name}"+a+$${c.price * c.quantity}`;
       if (index != this.list.length - 1) {
         if (index != this.list.length - 2) {
