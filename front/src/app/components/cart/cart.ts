@@ -86,8 +86,13 @@ export class Cart implements OnInit {
     this.service.getProduct(id).subscribe({
         next: (value) => {
           let newItem=value as CartItem
-          this.list()[index] = newItem;
-          this.list()[index].quantity = quantity;
+          // this.list()[index] = newItem;
+          // this.list()[index].quantity = quantity;
+          this.list.update((value)=> {
+            value[index] = newItem; 
+            value[index].quantity = quantity;
+            return value;
+          });
 
           this.total += newItem.price * newItem.quantity;
         },
