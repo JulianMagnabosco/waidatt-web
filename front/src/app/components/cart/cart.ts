@@ -69,6 +69,7 @@ export class Cart implements OnInit {
           // this.pages=value["pages"]
 
           this.total = 0;
+          console.log(this.list());
           this.list().forEach((element, index) => {
             this.searchItem(element.id.toString(), index);
           });
