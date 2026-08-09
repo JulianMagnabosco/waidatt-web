@@ -22,6 +22,7 @@ export class UserService {
         localStorage.setItem('refresh_token', res.refresh);
         localStorage.setItem('username', data.username);
         this.isLoggedIn.set(true);
+        this.username.set(data.username);
       }));
   }
 
@@ -30,6 +31,7 @@ export class UserService {
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('username');
     this.isLoggedIn.set(false);
+    this.username.set(null);
   }
 
 }
