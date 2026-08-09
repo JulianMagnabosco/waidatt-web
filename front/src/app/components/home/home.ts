@@ -17,7 +17,7 @@ export class Home implements OnInit {
   whatsappLink = environment.whatsappLink + "?text=Hola!%20Estoy%20interesado%20en%20sus%20productos.%20Quisiera%20saber%20más%20información.";
 
   slides = [
-    { id: 1, imageUrl: 'Captura3.png', title: '' },
+    { id: 1, imageUrl: 'panel-alt.png', title: '' },
     { id: 2, imageUrl: 'Captura2.png', title: '' },
     { id: 3, imageUrl: 'Captura1.png', title: '' },
   ];

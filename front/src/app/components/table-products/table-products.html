@@ -7,7 +7,7 @@
         class="w-full aspect-square object-cover mb-2">
       <h3 class="text-xl">{{ item.name }}</h3>
       <h3 class="text-sm font-bold uppercase p-1 rounded-xl bg-sky-300 w-min">{{ item.product_type }}</h3>
-      <p class="text-xl font-bold">${{ item.price }}</p>
+      <p class="text-xl font-bold" [hidden]="item.price<1">${{ item.price }}</p>
     </a>
     
     <a class="w-full font-bold text-center p-2 rounded-2xl bg-sky-500 text-white cursor-pointer hover:text-black hover:bg-sky-300" 

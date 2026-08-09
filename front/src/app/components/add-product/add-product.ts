@@ -38,7 +38,7 @@ export class AddProduct implements OnInit {
         message: 'Nombre no debe superar los 500 caracteres',
       });
 
-      min(schemaPath.price, 1, { message: 'Precio minimo es 1' });
+      // min(schemaPath.price, 1, { message: 'Precio minimo es 1' });
     },
     {
       submission: {
