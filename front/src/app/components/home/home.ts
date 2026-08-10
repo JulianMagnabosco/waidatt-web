@@ -18,8 +18,8 @@ export class Home implements OnInit {
 
   slides = [
     { id: 1, imageUrl: 'panel-alt.png', title: '' },
-    { id: 2, imageUrl: 'Captura2.png', title: '' },
-    { id: 3, imageUrl: 'Captura1.png', title: '' },
+    { id: 2, imageUrl: 'panel2.png', title: '' },
+    { id: 3, imageUrl: 'panel3.png', title: '' },
   ];
 
   sections = [

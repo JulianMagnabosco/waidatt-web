@@ -1,5 +1,5 @@
-<div class="mb-4 p-5">
-   <form action="" class="bg-white shadow-md p-2 rounded-lg" [formRoot]="searchForm">
+<div class="mb-4 p-5 flex justify-center ">
+   <form action="" class="bg-white shadow-md p-2 rounded-lg w-full max-w-3xl" [formRoot]="searchForm">
     <!-- buscar por texto -->
      <div class="flex gap-2 items-center">
       Buscar: 
@@ -42,15 +42,16 @@
 </div>
 
 <!-- paginado -->
-<div class="flex justify-center p-5 mt-10 mb-10 gap-4 font-bold">
-  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors"
-  (click)="prevPage()">
+<div class="flex justify-center p-5 mt-10 mb-10 gap-4 font-bold *:disabled:opacity-50">
+  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg enabled:hover:bg-cyan-700 transition-colors"
+  (click)="prevPage()" disabled="{{searchForm.page().value() <= 1}}">
     Anterior
   </button>
   <div class="flex items-center gap-2">
-    <span class="text-lg text-center">Página 1 de 10</span>
+    <span class="text-lg text-center">Página {{searchForm.page().value()}}</span>
   </div>
-  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg hover:bg-cyan-700 transition-colors"
-  (click)="nextPage()">
-  Siguiente</button>
+  <button class="bg-cyan-600 text-white px-4 py-2 rounded-lg enabled:hover:bg-cyan-700 transition-colors"
+  (click)="nextPage()" disabled="{{!canNextPage()}}">
+    Siguiente
+  </button>
 </div>

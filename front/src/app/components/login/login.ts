@@ -42,6 +42,7 @@ export class Login {
           },
           error: (error) => {
             console.error('Login failed:', error);
+            alert('Login fallo, chequear credenciales.');
             resolve({ ok: false });
           }
         });

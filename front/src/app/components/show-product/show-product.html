@@ -7,12 +7,15 @@
   @if (product()) {
   <div class="flex justify-center flex-wrap">
     <!-- <img class="rounded-md aspect-square shadow-2xl max-w-2xl" src="{{product()?.images?.at(0)?.image || 'not-found.png'}}" alt=""> -->
-    <div class="w-180 text-center">
+    <div class="w-180">
       @if (slides().length>1) {
       <app-carousel [autoplayInterval]="0" [slides]="slides()"></app-carousel>
       }
       @else {
-        <img class="rounded-md shadow-2xl " src="{{product()?.images?.at(0)?.image || 'not-found.png'}}" alt="">
+        <div class="flex justify-center">
+          <img class="rounded-md aspect-square shadow-2xl max-w-xl w-full" src="{{product()?.images?.at(0)?.image || 'not-found.png'}}" alt="">
+
+        </div>
       }
     </div>
 
