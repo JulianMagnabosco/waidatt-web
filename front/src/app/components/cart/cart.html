@@ -37,8 +37,8 @@
             <div class="flex">
               <input
                 class="p-2 max-w-20 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 valid:focus:ring-celeste-2 valid:focus:border-celeste-1 invalid:ring-red-200 invalid:border-red-800 invalid:bg-red-200"
-                type="number" [(ngModel)]="liststocks[$index]" min="1">
-                @if (liststocks[$index]!=c.quantity) {
+                type="number" [(ngModel)]="liststocks()[$index]" min="1">
+                @if (liststocks()[$index]!=c.quantity) {
                 <button
                   class="block bg-white border border-celeste-2 rounded-lg text-celeste-2 mx-1 p-3 h-min transition-all disabled:bg-slate-100 enabled:hover:bg-celeste-1 enabled:hover:scale-105 text-center disabled:text-gray-300"
                   (click)="update($index)">
