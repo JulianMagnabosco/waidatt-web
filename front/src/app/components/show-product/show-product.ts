@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, Type } from '@angular/core';
 import { Product } from '../../models/product';
 import { ProductsService } from '../../services/products-service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -6,10 +6,11 @@ import { UserService } from '../../services/user-service';
 import { AddImages } from '../add-images/add-images';
 import { Carousel, CarouselSlide } from "../carousel/carousel";
 import { environment } from '../../../environments/environment';
+import { TypenamePipe } from '../../pipes/typename-pipe';
 
 @Component({
   selector: 'app-show-product',
-  imports: [RouterLink, AddImages, Carousel],
+  imports: [RouterLink, AddImages, Carousel, TypenamePipe],
   templateUrl: './show-product.html',
   styleUrl: './show-product.css',
 })

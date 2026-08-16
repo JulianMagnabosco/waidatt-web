@@ -2,10 +2,11 @@ import { Component, input, output, signal } from '@angular/core';
 import { Product } from '../../models/product';
 import { RouterLink } from "@angular/router";
 import { required } from '@angular/forms/signals';
+import { TypenamePipe } from "../../pipes/typename-pipe";
 
 @Component({
   selector: 'app-table-products',
-  imports: [RouterLink],
+  imports: [RouterLink, TypenamePipe],
   templateUrl: './table-products.html',
   styleUrl: './table-products.css',
 })
