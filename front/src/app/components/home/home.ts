@@ -34,7 +34,7 @@ export class Home implements OnInit {
   productsService = inject(ProductsService);
   
   ngOnInit() {
-    this.productsService.search({}).subscribe({
+    this.productsService.search({ordering:"name"}).subscribe({
       next: (response) => {
         this.products.set(response.results);
       },

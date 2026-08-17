@@ -32,7 +32,7 @@ export class Catalog implements OnInit {
   searchModel = signal({
     name: '',
     product_type: '',
-    ordering: '-name',
+    ordering: 'name',
     page: 1,
   });
 

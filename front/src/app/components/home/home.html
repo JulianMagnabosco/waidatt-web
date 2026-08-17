@@ -6,8 +6,9 @@
   </div>
 
   <!-- bienvenida -->
-  <h1 class="text-cyan-600 text-4xl font-bold mb-4 text-shadow-lg text-shadow-black/15">
-    Bienvenido a <span class="text-cyan-800 font-normal font-display relative">RGW<span class="text-2xl absolute bottom-4">®</span></span>
+  <h1 class="text-cyan-600 text-6xl font-bold mb-4 text-shadow-lg text-shadow-black/15">
+    Bienvenido a <span class="text-cyan-800 font-normal font-display relative">RGW<span
+        class="text-2xl absolute bottom-4">®</span></span>
   </h1>
   <p class="text-lg mb-4 mx-auto max-w-2xl">
     Encuentra lo mejor en
@@ -19,7 +20,7 @@
 
 
   <!-- tipos de producto -->
-  <div class="flex flex-wrap justify-evenly mt-10 mb-10 gap-4 ">
+  <!-- <div class="flex flex-wrap justify-evenly mt-10 mb-10 gap-4 ">
     @for (s of sections; track $index) {
     <div class="flex flex-col items-center justify-start">
       <div class="p-5 size-40 bg-celeste rounded-full shadow-lg">
@@ -28,10 +29,10 @@
       <div class="text-center text-2xl font-bold uppercase whitespace-pre-line">{{ s.content }}</div>
     </div>
     }
-  </div>
+  </div> -->
 
   <!-- minicatalogo -->
-  <div class="mt-10 mb-10">
+  <div class="mt-10 mb-15">
     <h1 class="bg-celeste text-shadow-sm text-white mb-5 p-10 text-3xl font-bold text-center uppercase">
       Nuestros Productos
     </h1>
@@ -40,15 +41,26 @@
       <app-table-products [products]="products()" (addCartEvent)="addCart($event)"></app-table-products>
     </div>
 
-    <div class="text-center space-x-2">
-      <a class="bg-cyan-600 hover:bg-cyan-500 rounded-2xl p-2 text-white text-1xl font-bold cursor-pointer"
+    <!-- <div class="mt-2">
+      <a class=" bg-cyan-600 hover:bg-cyan-500 rounded-2xl p-2 text-white text-2xl font-bold cursor-pointer"
         routerLink="/catalog">
-        Ver Catalogo &RightArrow;
+        Ver Más <svg xmlns="http://www.w3.org/2000/svg" class="size-6 inline-block" viewBox="0 -960 960 960"
+          fill="white">
+          <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
+        </svg>
       </a>
-      <a class="bg-cyan-700 hover:bg-cyan-500 rounded-2xl p-2 text-white text-1xl font-bold cursor-pointer"
-        href="listargw.pdf" target="_blank">
-        Ver Listado Completo <img src="pdficon.svg" alt="PDF" class="inline-block w-6 h-6">
-      </a>
+    </div> -->
+
+    <div class="mt-12 bg-gray-100 p-5 shadow-xl transition-all">
+      <div class="text-2xl">
+        Para ver el listado completo, puedes revisar el siguiente PDF:
+      </div>
+      <div class="text-center mt-6 mb-3">
+        <a class="bg-cyan-700 hover:bg-cyan-500 rounded-2xl p-4 text-white text-2xl font-bold cursor-pointer"
+          href="listargw.pdf" target="_blank">
+          Ver Listado Completo (PDF) <img src="pdficon.svg" alt="PDF" class="inline-block size-10 pb-2">
+        </a>
+      </div>
     </div>
   </div>
 

@@ -1,0 +1,35 @@
+[project]
+name = "back"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "JulianMagnabosco", email = "julian.magnabosco@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "asgiref==3.12.1",
+    "dj-database-url==3.1.2",
+    "django==6.0.7",
+    "django-cleanup==9.0.0",
+    "django-cors-headers==4.9.0",
+    "django-filter==26.1",
+    "djangorestframework==3.17.1",
+    "djangorestframework-simplejwt==5.5.1",
+    "gunicorn==26.0.0",
+    "packaging==26.2",
+    "pillow==12.3.0",
+    "psycopg2-binary==2.9.12",
+    "pyjwt==2.13.0",
+    "python-decouple==3.8",
+    "sqlparse==0.5.5",
+    "tzdata==2026.3",
+]
+
+[project.scripts]
+back = "back:main"
+dj = "django.core.management:execute_from_command_line"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
