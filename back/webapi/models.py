@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 
 # Create your models here.
@@ -20,6 +22,8 @@ class Product(models.Model):
 
 def product_image_path(instance, filename):
     """Genera la ruta donde se guardará cada imagen subida."""
+    ext = filename.split('.')[-1]
+    filename = f'{uuid.uuid4()}.{ext}'
     return f'products/{instance.product.id or "tmp"}/{filename}'
 class ImageProduct(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')

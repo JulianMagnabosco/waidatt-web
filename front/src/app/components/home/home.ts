@@ -34,7 +34,7 @@ export class Home implements OnInit {
   productsService = inject(ProductsService);
   
   ngOnInit() {
-    this.productsService.search({ordering:"name"}).subscribe({
+    this.productsService.search({ordering:"name",product_type:"remeras"}).subscribe({
       next: (response) => {
         this.products.set(response.results);
       },
@@ -42,7 +42,29 @@ export class Home implements OnInit {
         console.error('Error fetching products:', error);
       }
     });
+    const list_pts=[
+      "remeras",
+      "camperas",
+      "chalecos",
+      "pantalones",
+      "calzado",
+    ]
+    for(let pt of list_pts ) {
+      this.addMore(pt);
+    }
   }
+
+  addMore(product_type: string) {
+    this.productsService.search({ordering:"name",product_type: product_type}).subscribe({
+      next: (response) => {
+        this.products.update((current) => [...current, ...response.results]);
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      }
+    });
+  }
+
   addCart(id: number) {
     let data = {
       id: id,
