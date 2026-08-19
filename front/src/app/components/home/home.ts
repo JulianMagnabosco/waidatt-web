@@ -4,7 +4,9 @@ import { TableProducts } from '../table-products/table-products';
 import { Product } from '../../models/product';
 import { environment } from '../../../environments/environment';
 import { ProductsService } from '../../services/products-service';
-import { RouterLink } from "@angular/router";
+import { RouterLink } from '@angular/router';
+import { concatMap } from 'rxjs/internal/operators/concatMap';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +16,9 @@ import { RouterLink } from "@angular/router";
 })
 export class Home implements OnInit {
   whatsappNumber = environment.whatsappNumber;
-  whatsappLink = environment.whatsappLink + "?text=Hola!%20Estoy%20interesado%20en%20sus%20productos.%20Quisiera%20saber%20más%20información.";
+  whatsappLink =
+    environment.whatsappLink +
+    '?text=Hola!%20Estoy%20interesado%20en%20sus%20productos.%20Quisiera%20saber%20más%20información.';
 
   slides = [
     { id: 1, imageUrl: 'panel.png', title: '' },
@@ -28,41 +32,46 @@ export class Home implements OnInit {
     { id: 3, iconUrl: 'icono3.svg', content: 'ELEMENTOS DE \n SEGURIDAD' },
   ];
 
-  products = signal<Product[]>([
-  ]);
-  
-  productsService = inject(ProductsService);
-  
-  ngOnInit() {
-    this.productsService.search({ordering:"name",product_type:"remeras"}).subscribe({
-      next: (response) => {
-        this.products.set(response.results);
-      },
-      error: (error) => {
-        console.error('Error fetching products:', error);
-      }
-    });
-    const list_pts=[
-      "remeras",
-      "camperas",
-      "chalecos",
-      "pantalones",
-      "calzado",
-    ]
-    for(let pt of list_pts ) {
-      this.addMore(pt);
-    }
-  }
+  products = signal<Product[]>([]);
 
-  addMore(product_type: string) {
-    this.productsService.search({ordering:"name",product_type: product_type}).subscribe({
-      next: (response) => {
-        this.products.update((current) => [...current, ...response.results]);
-      },
-      error: (error) => {
-        console.error('Error fetching products:', error);
-      }
-    });
+  productsService = inject(ProductsService);
+
+  ngOnInit() {
+    // this.productsService.search({ordering:"name",product_type:"remeras"}).subscribe({
+    //   next: (response) => {
+    //     this.products.set(response.results);
+    //   },
+    //   error: (error) => {
+    //     console.error('Error fetching products:', error);
+    //   }
+    // });
+    // const list_pts=[
+    //   "remeras",
+    //   "camperas",
+    //   "chalecos",
+    //   "pantalones",
+    //   "calzado",
+    // ]
+    // for(let pt of list_pts ) {
+    //   this.addMore(pt);
+    // }
+    this.products.set([]); // arrancamos vacío
+    const list_pts = ['remeras', 'camperas', 'chalecos', 'pantalones', 'calzado'];
+
+    from(list_pts)
+      .pipe(
+        concatMap((product_type) =>
+          this.productsService.search({ ordering: 'name', product_type }),
+        ),
+      )
+      .subscribe({
+        next: (response) => {
+          this.products.update((current) => [...current, ...response.results]);
+        },
+        error: (error) => {
+          console.error('Error fetching products:', error);
+        },
+      });
   }
 
   addCart(id: number) {
@@ -71,19 +80,17 @@ export class Home implements OnInit {
       quantity: 1,
     };
     this.productsService.addCart(data).subscribe({
-        next: (value) => {
-          alert( 'Añadido al carrito');
-          // alert("Añadido al carrito");
-        },
-        error: (err) => {
-          // alert("Hubo un error al añadir al carrito");
-          if (err.status == 403 || err.status == 401) {
-            return;
-          }
-          alert( 
-            'Error inesperado en el servidor, revise su conexion a internet'
-          );
-        },
-      })
+      next: (value) => {
+        alert('Añadido al carrito');
+        // alert("Añadido al carrito");
+      },
+      error: (err) => {
+        // alert("Hubo un error al añadir al carrito");
+        if (err.status == 403 || err.status == 401) {
+          return;
+        }
+        alert('Error inesperado en el servidor, revise su conexion a internet');
+      },
+    });
   }
 }
