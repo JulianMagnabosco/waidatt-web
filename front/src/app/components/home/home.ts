@@ -67,6 +67,7 @@ export class Home implements OnInit {
       .subscribe({
         next: (response) => {
           this.products.update((current) => [...current, ...response.results]);
+          this.products.update((current) => current.slice(0, 12)); // Limitar a los primeros 12 productos
         },
         error: (error) => {
           console.error('Error fetching products:', error);
